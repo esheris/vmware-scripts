@@ -6,7 +6,7 @@ import random
 
 if len(sys.argv) != 8:
     print "Usage: "
-    print "python create_vm_pyvmomi.py <polaris|orion|nexus> <vm_cluster> <vm_name> <cpus> <memory_in_GB> <IP> <5|6>"
+    print "python create_vm_pyvmomi.py <datacenter> <vm_cluster> <vm_name> <cpus> <memory_in_GB> <IP> <5|6>"
     sys.exit(1)
 
 vmware_server = sys.argv[1].lower()
@@ -268,8 +268,8 @@ proc_manager.StartProgramInGuest(vm=vm,auth=creds,spec=create_program_spec("/bin
 proc_manager.StartProgramInGuest(vm=vm,auth=creds,spec=create_program_spec("/sbin/ifconfig",[interface,vm_ip, "netmask", "255.255.255.0", "up"]))
 proc_manager.StartProgramInGuest(vm=vm,auth=creds,spec=create_program_spec("/sbin/route",['add','default','gw',first_3_octets + ".1",interface]))
 proc_manager.StartProgramInGuest(vm=vm,auth=creds,spec=create_program_spec("/bin/cp",['/etc/resolv.conf.prod','/etc/resolv.conf']))
-proc_manager.StartProgramInGuest(vm=vm,auth=creds,spec=create_program_spec("/bin/mkdir",['-p', '/nfs/infra']))
-proc_manager.StartProgramInGuest(vm=vm,auth=creds,spec=create_program_spec("/bin/mkdir",['-p', '/depot/linux_x86']))
+proc_manager.StartProgramInGuest(vm=vm,auth=creds,spec=create_program_spec("/bin/mkdir",['-p', 'folder']))
+proc_manager.StartProgramInGuest(vm=vm,auth=creds,spec=create_program_spec("/bin/mkdir",['-p', 'folder']))
 proc_manager.StartProgramInGuest(vm=vm,auth=creds,spec=create_program_spec("/bin/mount",['placetomount', 'folder']))
 proc_manager.StartProgramInGuest(vm=vm,auth=creds,spec=create_program_spec("/bin/mount",['placetomount', 'folder']))
 
@@ -280,11 +280,3 @@ if vm_osver == "5":
     proc_manager.StartProgramInGuest(vm=vm,auth=creds,spec=create_program_spec('/usr/bin/yum',['--enablerepo=*', '--nogpgcheck', '-y', 'install', 'pkgconfig', '/nfs/infra/3rd_party/sw/virt-what-1.11-2.el5.x86_64.rpm']))
 
 print "Successfully ran commands against vm."
-
-
-
-
-
-
-
-
