@@ -9,7 +9,7 @@ vm_memory = sys.argv[5]
 vm_ip = sys.argv[6]
 vm_osver = sys.argv[7]
 vm_diskcount = sys.argv[8]
-vm_org = sys.argv[9].upper()
+vm_org = sys.argv[9]
 vm_ou = sys.argv[10].upper()
 vm_pci = sys.argv[11].upper()
 vm_type = sys.argv[12].upper()
@@ -17,7 +17,7 @@ vm_type = sys.argv[12].upper()
 
 vm = VmBuilds(vmware_datacenter, vm_cluster, vm_name, vm_CPUs, vm_memory, vm_ip, vm_osver,vm_diskcount, vm_org, vm_ou, vm_pci, vm_type)
 template_vm = vm.find_template(vm.vm_osver)
-devices = [vm.create_nic_spec(template_vm), vm.create_scsi_ctrl(int(vm.vm_osver))]
+#devices = [vm.create_nic_spec(template_vm), vm.create_scsi_ctrl(int(vm.vm_osver))]
 #note, this is an extend not an append!!
 devices.extend(vm.create_disks())
 reloc_spec = vm.create_relocation_spec()
